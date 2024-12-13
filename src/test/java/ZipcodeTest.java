@@ -25,6 +25,7 @@ public class ZipcodeTest {
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
         driver.get("https://www.sharelane.com/cgi-bin/register.py");
+
         driver.findElement(By.name("zip_code")).sendKeys("1111");
         driver.findElement(By.cssSelector("[value = Continue]")).click();
         String errorMessage = driver.findElement(By.cssSelector("[class = error_message]")).getText();
