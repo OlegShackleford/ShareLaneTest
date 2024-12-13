@@ -12,11 +12,6 @@ public class ShoppingCartTest {
         // регистрация - логин - выибраем книгу и добавялем в корзину и проверяем скидку
         WebDriver driver;
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--remote-allow-origins=*");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
         driver.get("https://www.sharelane.com/cgi-bin/register.py?page=2&zip_code=12345&first_name=test&last_name" +
