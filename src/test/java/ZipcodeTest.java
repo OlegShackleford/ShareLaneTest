@@ -2,6 +2,7 @@ import com.google.common.annotations.VisibleForTesting;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -20,12 +21,20 @@ public class ZipcodeTest {
         <input type="text" name="zip_code" value="">
          */
         System.setProperty("webdriver.chrome.driver","src/test/resources/chromedriver.exe");
-        WebDriver browser = new ChromeDriver();
-        browser.get("https://www.sharelane.com/cgi-bin/register.py");
-        browser.findElement(By.name("zip_code")).sendKeys("1111");
-        browser.findElement(By.cssSelector("[value = Continue]")).click();
-        String errorMessage = browser.findElement(By.cssSelector("[class = error_message]")).getText();
+        WebDriver driver;
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        driver.get("https://www.sharelane.com/cgi-bin/register.py");
+        driver.findElement(By.name("zip_code")).sendKeys("1111");
+        driver.findElement(By.cssSelector("[value = Continue]")).click();
+        String errorMessage = driver.findElement(By.cssSelector("[class = error_message]")).getText();
         Assert.assertEquals(errorMessage, "Oops, error on page. ZIP code should have 5 digits");
-        browser.quit();
+        driver.quit();
     }
 }

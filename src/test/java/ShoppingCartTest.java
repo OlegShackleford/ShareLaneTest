@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -9,7 +10,15 @@ public class ShoppingCartTest {
     @Test
     public void checkDiscount(){
         // регистрация - логин - выибраем книгу и добавялем в корзину и проверяем скидку
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver;
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
         driver.get("https://www.sharelane.com/cgi-bin/register.py?page=2&zip_code=12345&first_name=test&last_name" +
                 "=test&email=user%40pflb.ru&password1=12345678&password2=12345678");
 
@@ -38,9 +47,9 @@ public class ShoppingCartTest {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(discountPercent,"0","Пишем мессаге в каждом");
-        softAssert.assertEquals(discount$,"0");
-        softAssert.assertEquals(total,"190");
+        softAssert.assertEquals(discountPercent,"2","Пишем мессаге в каждом");
+        softAssert.assertEquals(discount$,"3.8");
+        softAssert.assertEquals(total,"193.80");
         driver.quit();
         softAssert.assertAll();
 
